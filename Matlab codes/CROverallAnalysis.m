@@ -356,7 +356,7 @@ for c=1:number_of_clusters
     %ylim([-.8,.8])
     set(gca,'yticklabel','')
 end
-%saveas(gcf,'LogPlots/Profile_FC3.png')
+%saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/Profile_FC3.png')
 
 %Cluster profiles of all replicates for CV
 [cdis_CV,~,~,ctrsCV]=ProfileClusterAnalysis(CRs,Freq_1,(CV_overall),number_of_clusters);
@@ -364,7 +364,7 @@ end
 %Adjust profiles to make more distinct filtering behaviors (1-saturation,
 %2-linear, 3-band-pass, 4-band-stop, 5-low-pass
 ctrsCV=[0.788353724500856,-0.394924286856965,-0.393429437643890;
-    -0.516116430390331,-0.213976559640784,0.730092990031115;
+    -0.516116430390331,-0.213976559640784,0.731092990031115;
     -0.202378178954878,0.748614469598275,-0.546236290643397;
     0.322669678434008,-0.772813223608021,0.450143545174013;
     0.498197985466675,0.287914018610248,-0.786112004076924];
@@ -382,7 +382,7 @@ for c=1:number_of_clusters
     set(gca,'yticklabel','')
 end
 %suptitle('K-means of CV')
-%saveas(gcf,'LogPlots/Profile_CV.png')
+%saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/Profile_CV.png')
 
 %This is to find the errorbars on percent of GO (complex) in each cluster
 for j=1:100
@@ -482,59 +482,59 @@ markers=['.','.','.','.','.'];
 
 fc2_dark_comp=[fc2_dark_overall(:,1); fc2_dark_overall(:,2);fc2_dark_overall(:,3)];
 fc2_comp=[fc2_overall(:,1);fc2_overall(:,2);fc2_overall(:,3)];
-fc3_comp=[fc3_overall(:,1);fc3_overall(:,2);fc3_overall(:,3)];
-CV_comp=[CV_overall(:,1);CV_overall(:,2);CV_overall(:,3)];
-CV_dark_comp=[CV_dark_overall(:,1);CV_dark_overall(:,2);CV_dark_overall(:,3)];
-cdis_FC3_comp=[cdis_FC3';cdis_FC3';cdis_FC3'];
-CR_comp=[CR_80;CR_80;CR_80];
+fc3_comp=[fc3_overall_notmasked(:,1);fc3_overall_notmasked(:,2);fc3_overall_notmasked(:,3)];
+CV_comp=[CV_overall_notmasked(:,1);CV_overall_notmasked(:,2);CV_overall_notmasked(:,3)];
+CV_dark_comp=[CV_dark_overall_notmasked(:,1);CV_dark_overall_notmasked(:,2);CV_dark_overall_notmasked(:,3)];
+cdis_FC3_comp=[cdis_FC3_not_masked';cdis_FC3_not_masked';cdis_FC3_not_masked'];
+CR_comp=[CR_80_not_masked;CR_80_not_masked;CR_80_not_masked];
 D='Dark';
 A='Cond1';
 B='Cond2';
 C='Cond3';
-cond_comp=[repmat({A},length(cdis_FC3),1); repmat({B},length(cdis_FC3),1); repmat({C},length(cdis_FC3),1)];
+cond_comp=[repmat({A},length(cdis_FC3_not_masked),1); repmat({B},length(cdis_FC3_not_masked),1); repmat({C},length(cdis_FC3_not_masked),1)];
 % %Set cond averages equal to cond average of cond 1
 % fc2_dark_comp(strcmp(cond_comp,B))=fc2_dark_comp(strcmp(cond_comp,B))./nanmean(fc2_dark_comp(strcmp(cond_comp,B))).*nanmean(fc2_dark_comp(strcmp(cond_comp,A)));
 % fc2_dark_comp(strcmp(cond_comp,C))=fc2_dark_comp(strcmp(cond_comp,C))./nanmean(fc2_dark_comp(strcmp(cond_comp,C))).*nanmean(fc2_dark_comp(strcmp(cond_comp,A)));
 
-figure
-%Dark levels for each cluster (cluster 0, which is low var and low value,
-%is not included)
-fc2_all=[nanmean(fc2_dark_overall,2) fc2_overall(:,1) fc2_overall(:,2) fc2_overall(:,3)];
-[p_value_fc2_dark,~,stats]=anovan(fc2_dark_comp,{cdis_FC3_comp,cond_comp},'model',2,'varnames',{'Cluster','cond'});
- multcompare_fc2_dark=multcompare(stats,'Dimension',[1,1]);
-figure
-hold on
-values=[];
-err=[];
- for i=1:number_of_clusters
-err=[nanstd(fc2_all(cdis_FC3==i,1))./sqrt(length(fc2_all(cdis_FC3==i,1)))];
-values=[nanmean(fc2_all(cdis_FC3==i,1))];
-bar(i,values,'FaceColor',face_color(i,:));
-errorbar(i,values,err,'linestyle','none','color','k','linewidth',2,'capsize',0);
- end
-xlabel('Cluster')
-ylabel('Average log_1_0(Dark fluorescence)')
-title('Based on Fold Change profiles')
-%saveas(gcf,'LogPlots/darkfc2perCluster.png')
+% figure
+% %Dark levels for each cluster (cluster 0, which is low var and low value,
+% %is not included)
+% fc2_all=[nanmean(fc2_dark_overall,2) fc2_overall(:,1) fc2_overall(:,2) fc2_overall(:,3)];
+% [p_value_fc2_dark,~,stats]=anovan(fc2_dark_comp,{cdis_FC3_comp,cond_comp},'model',2,'varnames',{'Cluster','cond'});
+%  multcompare_fc2_dark=multcompare(stats,'Dimension',[1,1]);
+% figure
+% hold on
+% values=[];
+% err=[];
+%  for i=1:number_of_clusters
+% err=[nanstd(fc2_all(cdis_FC3==i,1))./sqrt(length(fc2_all(cdis_FC3==i,1)))];
+% values=[nanmean(fc2_all(cdis_FC3==i,1))];
+% bar(i,values,'FaceColor',face_color(i,:));
+% errorbar(i,values,err,'linestyle','none','color','k','linewidth',2,'capsize',0);
+%  end
+% xlabel('Cluster')
+% ylabel('Average log_1_0(Dark fluorescence)')
+% title('Based on Fold Change profiles')
+%saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/darkfc2perCluster.png')
 
 % Light condition fluorescence
 values=[];
 err=[];
 Frequency=[0 Freq_1];
 
-figure
-hold on
-for i=1:number_of_clusters
- err=nanstd(fc2_all(cdis_FC3==i,:)./sqrt(length(fc2_all(cdis_FC3==i,:))));
-values=nanmean(fc2_all(cdis_FC3==i,:));
-plot(Frequency,values,'Color',face_color(i,:),'LineWidth',3,'Marker',markers(i),'MarkerSize',10);
-errorbar(Frequency,values,err,'linestyle','none','color',face_color(i,:));
-end
-set(gca,'xscale','log')
-xlabel('Frequency (sec^-^1)')
-ylabel('Average log_1_0(fluorescence)')
-title('Based on Fold Change profiles')
-%saveas(gcf,'LogPlots/fc2vsfreq.png')
+% figure
+% hold on
+% for i=1:number_of_clusters
+%  err=nanstd(fc2_all(cdis_FC3==i,:)./sqrt(length(fc2_all(cdis_FC3==i,:))));
+% values=nanmean(fc2_all(cdis_FC3==i,:));
+% plot(Frequency,values,'Color',face_color(i,:),'LineWidth',3,'Marker',markers(i),'MarkerSize',10);
+% errorbar(Frequency,values,err,'linestyle','none','color',face_color(i,:));
+% end
+% set(gca,'xscale','log')
+% xlabel('Frequency (sec^-^1)')
+% ylabel('Average log_1_0(fluorescence)')
+% title('Based on Fold Change profiles')
+%saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/fc2vsfreq.png')
 
 %Plot average fc2 for each condition broken up by cluster
 
@@ -561,7 +561,7 @@ title('Based on Fold Change profiles')
 %     %set(gca,'YScale','log')
   
 % hold off
-% %saveas(gcf,'LogPlots/FluorvsProfile_bar.png')
+% %saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/FluorvsProfile_bar.png')
 % figure
 % [p_value_fc2,~,stats]=anovan(fc2_comp,{cdis_FC3_comp,cond_comp},'model',2,'varnames',{'Cluster','cond'});
 % multcompare_fc2=multcompare(stats,'Dimension',[1,2])
@@ -597,7 +597,7 @@ ylabel(han,'Average log_1_0 (FC)');
 %     title('Based on Fold Change profiles')
     %set(gca,'Yscale','log')
 hold off
-%saveas(gcf,'LogPlots/fcvsprofile_bar.png')
+%saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/fcvsprofile_bar.png')
 figure
 [p_value_fc3,~,stats]=anovan(fc3_comp,{cdis_FC3_comp,cond_comp},'model',2,'varnames',{'Cluster','cond'});
 multcompare_fc3=multcompare(stats,'Dimension',[1,2])
@@ -615,7 +615,7 @@ set(gca,'xscale','log')
 xlabel('Frequency (sec^-^1)')
 ylabel('Average log_1_0(Fold change)')
 title('Based on Fold Change profiles')
-%saveas(gcf,'LogPlots/fc3vsfreq.png')
+%saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/fc3vsfreq.png')
 
 %Plot range of fc3 broken up by cluster
 range_fc3=max(fc3_overall')'-min(fc3_overall')';
@@ -637,7 +637,7 @@ errorbar(1:number_of_clusters,values,err,'linestyle','none','color','k','linewid
   %set(gca,'Yscale','log')
 hold off
 title('Based on Fold Change profiles')
-%saveas(gcf,'LogPlots/rangeFC.png')
+%saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/rangeFC.png')
 figure
 [p_value_range_fc3,~,stats]=anovan(range_fc3,{cdis_FC3},'varnames',{'Cluster'});
 multcompare_range_fc3=multcompare(stats)
@@ -660,7 +660,7 @@ errorbar(1:number_of_clusters,values,err,'linestyle','none','color','k','linewid
   %set(gca,'Yscale','log')
 hold off
 title('Based on CV profiles')
-%saveas(gcf,'LogPlots/rangeFC_CV.png')
+%saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/rangeFC_CV.png')
 figure
 [p_value_range_fc3_CV,~,stats]=anovan(range_fc3,{cdis_CV},'varnames',{'Cluster'});
 multcompare_range_fc3_CV=multcompare(stats)
@@ -685,7 +685,7 @@ errorbar(1:number_of_clusters,values,err,'linestyle','none','color','k','linewid
   %set(gca,'Yscale','log')
 hold off
 title('Based on Fold Change profiles')
-%saveas(gcf,'LogPlots/rangefluor.png')
+%saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/rangefluor.png')
 figure
 [p_value_range_fc2,~,stats]=anovan(range_fc2,{cdis_FC3},'varnames',{'Cluster'});
 multcompare_range_fc2=multcompare(stats)
@@ -708,7 +708,7 @@ set(gca,'xscale','log')
 xlabel('Frequency (sec^-^1)')
 ylabel('Average log_10 (CV)')
 title('Based on Fold Change profiles')
-%saveas(gcf,'LogPlots/CVvsProfile.png')
+%saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/CVvsProfile.png')
 hold off
 figure
 
@@ -729,7 +729,7 @@ ylabel(han,'Average log_1_0 (CV)');
 %xlabel(han,'FC cluster number');
 %title(han,'Based on Fold Change profiles');
 
-%saveas(gcf,'LogPlots/CV_FCcluster.png')
+%saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/CV_FCcluster.png')
 hold off
 
 figure
@@ -739,8 +739,8 @@ multcompare_CV=multcompare(stats,'Dimension',[1,2])
 cdis_CV_comp=[cdis_CV'; cdis_CV'; cdis_CV'];
 %Dark levels of CV
 CV_all=[nanmean(CV_dark_overall,2); CV_overall(:,1); CV_overall(:,2); CV_overall(:,3)];
-[p_value_CV_dark,~,stats]=anovan(CV_dark_comp,{cdis_CV_comp,cond_comp},'model',2,'varnames',{'Cluster','cond'});
- multcompare_CV_dark=multcompare(stats,'Dimension',[1,1]);
+% [p_value_CV_dark,~,stats]=anovan(CV_dark_comp,{cdis_CV_comp,cond_comp},'model',2,'varnames',{'Cluster','cond'});
+%  multcompare_CV_dark=multcompare(stats,'Dimension',[1,1]);
 figure
 hold on
 values=[];
@@ -754,7 +754,7 @@ errorbar(i,values,err,'linestyle','none','color','k','linewidth',2,'capsize',0);
 xlabel('Cluster')
 ylabel('Average log_1_0(Dark CV)')
 title('Based on CV profiles')
-%saveas(gcf,'LogPlots/darkCVperCluster.png')
+%saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/darkCVperCluster.png')
 
 % Light condition CV
 values=[];
@@ -773,7 +773,7 @@ set(gca,'xscale','log')
 xlabel('Frequency (sec^-^1)')
 ylabel('Average log_1_0(CV)')
 title('Based on CV profiles')
-%saveas(gcf,'LogPlots/CVvsfreq.png')
+%saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/CVvsfreq.png')
 
 %Plot range of CV broken up by cluster
 %range_CV=max(CV_overall')'-min(CV_overall')';
@@ -795,7 +795,7 @@ errorbar(1:number_of_clusters,values,err,'linestyle','none','color','k','linewid
     title('Based on CV profiles')
   %set(gca,'Yscale','log')
 hold off
-%saveas(gcf,'LogPlots/rangeCVClusters.png')
+%saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/rangeCVClusters.png')
 figure
 [p_value_range_CV,~,stats]=anovan(range_fc2,{cdis_CV},'varnames',{'Cluster'});
 multcompare_range_CV=multcompare(stats)
@@ -817,7 +817,7 @@ end
     xlabel('Cluster number based on CV')
     title('Based on CV profiles')
     hold off
-    %saveas(gcf,'LogPlots/darkFluor_CVcluster.png')
+    %saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/darkFluor_CVcluster.png')
 %Average FC2 for each CV cluster (light)
 values=[];
 err=[];
@@ -834,7 +834,7 @@ end
     set(gca,'Xscale','log')
     title('Based on CV profiles')
     hold off
-    %saveas(gcf,'LogPlots/Fluor_CVcluster.png')
+    %saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/Fluor_CVcluster.png')
 %Average FC3 for each condition broken up by cluster
 values=[];
 err=[];
@@ -857,9 +857,9 @@ han.YLabel.Visible='on';
 ylabel(han,'Average log_1_0 (FC)');
 %xlabel(han,'FC cluster number');
 title(han,'Based on CV profiles');
-%saveas(gcf,'LogPlots/FC3vsProfiles_for_CV.png')
-[p_value_fc3_CV,~,stats]=anovan(fc3_comp,{cdis_CV_comp},'varnames',{'Cluster'});
-multcompare_fc3_CV=multcompare(stats)
+%saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/FC3vsProfiles_for_CV.png')
+% [p_value_fc3_CV,~,stats]=anovan(fc3_comp,{cdis_CV_comp},'varnames',{'Cluster'});
+% multcompare_fc3_CV=multcompare(stats)
 
 
 %% Make bar charts and perform nanova comparing the percent of each profile cluster among the GOs.
@@ -942,186 +942,21 @@ err=err(I);
     %[p_CV,t_CV,stat_CV]=anova1(temp_CV,temp_GO);
     %multcompare(stat_CV)
 end
-%saveas(plot_GO,'LogPlots/GO_percent_cluster_FC3.png')
-%saveas(plot_GO_CV,'LogPlots/GO_percent_cluster_CV.png')
+xlabel('Keung GO')
+ylabel('Percent found in cluster')
+%saveas(plot_GO,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/GO_percent_cluster_FC3.png')
+%saveas(plot_GO_CV,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/GO_percent_cluster_CV.png')
 test=average_per_GO(:);
 
 
 
-%  %make general activity color
-%  [~,GA]=xlsread('GeneOntologyList.xlsx','General activity');
-%  General_activity=NaN*ones(length(GOs),3);
-%  %General_activity_names=[];
-%  for i=1:length(GOs)
-%      temp=strcmp(GA(:,1),GOs(i));
-%      temp=GA(temp,2);
-%      if sum(strcmp(temp,'HAT'))==1
-%          General_activity(i,:)=face_color(5,:);
-%      elseif sum(strcmp(temp,'HDAC'))==1
-%              General_activity(i,:)=face_color(2,:);
-%      elseif sum(strcmp(temp,'Nucleosome remodeler'))==1
-%                  General_activity(i,:)=face_color(3,:);
-%      elseif sum(strcmp(temp,'Transcriptional complex'))==1
-%                      General_activity(i,:)=face_color(4,:);
-%      else
-%                      General_activity(i,:)=face_color(1,:);
-%      end
-%      General_activity_names(i)=string(temp);
-%  end
-% %General_activity=[face_color(1,:);face_color(2,:);face_color(3,:);face_color(1,:);face_color(4,:);face_color(5,:);face_color(2,:);face_color(1,:);face_color(5,:);face_color(1,:);face_color(5,:);face_color(3,:);face_color(4,:);face_color(2,:);face_color(5,:);face_color(3,:);face_color(4,:);face_color(2,:);face_color(4,:)];
-% p_GO_cluster_distance=NaN*ones(length(GOs),number_of_clusters);
-% p_GO_hygepdf=NaN*ones(length(GOs),number_of_clusters);
-% for i=1:35
-% temp=Albert(i,2:end);
-% temp=temp(~strcmp(temp,''));
-% index1_GO=contains(CR_80,temp);
-% for j=1:number_of_clusters
-% index2_cluster=cdis_FC3==j;
-% temp2=contains(Albert,namesOfCRs);
-% temp2=sum(temp2(i,:));
-% p_GO_cluster_distance(i,j)=ranksum(Distance_matrix_fc3(index1_GO,j),Distance_matrix_fc3(index2_cluster,j));
-% p_GO_hygepdf(i,j)=hygepdf(round(average_GO(i,j)),180,temp2,round(sum(average_GO(:,j))));
-% end
-% 
-% end
-% p_GO_hygepdf=p_GO_hygepdf(number_CRs>3,:);
-% GO_hygepdf=Albert(number_CRs>3,1);
-% p_GO_hygepdf_trans=-log10(p_GO_hygepdf);
-% figure
-% for i=1:number_of_clusters
-%     subplot(3,2,i)
-%     hold on
-%     [values,j]=sort(p_GO_hygepdf_trans(:,i));
-%     label=GO_hygepdf(j);
-%     bar(1:length(GOs),values,'FaceColor',face_color(i,:));
-%     set(gca,'XTick',1:length(GOs))
-%     set(gca,'XTickLabel',label)
-%     set(gca,'XTickLabelRotation',45)
-%     set(gca,'fontsize',8)
-%     set(gca,'position',axes_positions(i,:))
-%     ylabel('-log_1_0(p)')
-%     ylim([0,2])
-%     %set(gca,'yticklabel','')
-% end
-% %pca
-% [coeff_fc3,score,latent,tsquared]=pca(average_per_GO(:,1:5));
-% figure
-% hold on
-% for i=1:length(GOs)
-% text(score(i,1),score(i,2),GOs(i,1),'color',General_activity(i,:))
-% end
-% xlim([-.5,.5]),ylim([-.5,.5])
-% xlabel('Principal component 1'), ylabel('Principal component 2')
-% title('FC only')
-% %%saveas(gcf,'PCA_FC3.png')
-% hold off
-% [coeff_CV,score,latent,tsquared]=pca(average_per_GO_CV(:,1:5));
-% figure
-% hold on
-% for i=1:length(GOs)
-% text(score(i,1),score(i,2),GOs(i,1),'color',General_activity(i,:))
-% end
-% xlim([-.5,.5]),ylim([-.5,.5])
-% xlabel('Principal component 1'), ylabel('Principal component 2')
-% title('CV only')
-% %%saveas(gcf,'PCA_CV.png')
-% FC_CV=[average_per_GO(:,1:5) average_per_GO_CV(:,1:5)];
-% [coeff,score,latent,tsquared]=pca(FC_CV);
-% figure
-% hold on
-% for i=1:length(GOs)
-% text(score(i,1),score(i,2),GOs(i,1),'color',General_activity(i,:))
-% end
-% xlim([-.5,.5]),ylim([-.5,.5])
-% xlabel('Principal component 1'), ylabel('Principal component 2')
-% title('FC and CV')
-% %%saveas(gcf,'PCA_both.png')
-% %% PCAs for CRs
-% %Need to rearrange CRs/replicates
-% %Make a matrix with each row is a CR, with four columns (one for each replicate) with cluster number
-% %for each replicate: called FC3_PCA
-% face_color=[0,0,0.4;0,.2,.7;.05,.5,.4;.9,0,1;1,.7,0;1,0,0;0,0,0;0,.8,1;0,1,0;];
-% [~,idx_fc3] = pdist2(ctrs,fc3_overall,'euclidean','Smallest',1);
-% [~,idx_CV]=pdist2(ctrsCV,CV_overall,'euclidean','Smallest',1);
-% FC3_PCA=NaN*ones(length(CRs),5);
-% CV_PCA=NaN*ones(length(CRs),5);
-% GO=zeros(length(CRs),37);
-% for i=1:length(CRs)
-%     temp1=strcmp(CR_80,CRs(i));
-%     if sum(temp1)==0
-%     else
-%     index=find(temp1==1);
-%     for j=1:length(index)
-%         column=idx_fc3(index(j));
-%     FC3_PCA(i,column)=1;
-%     column=idx_CV(index(j));
-%     CV_PCA(i,column)=1;
-%     end
-%     end
-%     temp2=sum(strcmp(Albert,CRs(i)),2);
-%     indices=find(temp2==1);
-%     if indices==0
-%     else
-%     GO(i,1:length(indices))=indices;
-%     end
-% end
-% CRs_PCA=CRs(nansum(FC3_PCA,2)~=0);
-% CV_PCA=CV_PCA(nansum(FC3_PCA,2)~=0,:);
-% GO=GO(nansum(FC3_PCA,2)~=0,:);
-% FC3_PCA=FC3_PCA(nansum(FC3_PCA,2)~=0,:);
-% CV_PCA=CV_PCA./nansum(CV_PCA,2);
-% FC3_PCA=FC3_PCA./nansum(FC3_PCA,2);
-% 
-% %find zscore using PCA from GOs (above)
-% FC3_PCA(isnan(FC3_PCA))=0;
-% CV_PCA(isnan(CV_PCA))=0;
-% overall_PCA=[FC3_PCA CV_PCA];
-% zscores_FC3=FC3_PCA*coeff_fc3;
-% zscores_CV=CV_PCA*coeff_CV;
-% zscores_overall=overall_PCA*coeff;
-% figure
-% text(zscores_FC3(:,1),zscores_FC3(:,2),CRs_PCA)
-% xlim([-1.5,1.5])
-% ylim([-1.5,1.5])
-% title('FC3 only')
-% figure
-% text(zscores_CV(:,1),zscores_CV(:,2),CRs_PCA)
-% xlim([-1.5,1.5])
-% ylim([-1,1.5])
-% title('CV only')
-% figure
-% text(zscores_overall(:,1),zscores_overall(:,2),CRs_PCA)
-% xlim([-1.5,1.5])
-% ylim([-1.5,1.5])
-% title('CV and FC3')
 
-% %find zscore using PCA for CRs
-% [coeff_overall,score_CRs,latent,tsquared]=pca(overall_PCA);
-% figure
-% text(score_CRs(:,1),score_CRs(:,2),CRs_PCA)
-% title('PCA of CRs (both CV and FC3)')
-% xlim([-1,1.5])
-% ylim([-1.5,1.5])
-% CRs_PCA_fig=figure;
-% scatter(score_CRs(:,1),score_CRs(:,2),20,'k')
-% hold on
-% GOs_PCA_fig=figure;
-% scatter(zscores_overall(:,1),zscores_overall(:,2),20,'k')
-% hold on
-% for i=1:length(Albert(:,1))
-%     temp1=Albert(i,1);
-%     temp2=sum(GO==i,2);
-%     figure(CRs_PCA_fig)
-%     text(score_CRs(find(temp2==1),1),score_CRs(find(temp2==1),2),CRs_PCA(find(temp2==1)),'color',face_color(i,:))
-%     figure(GOs_PCA_fig)
-%     text(zscores_overall(find(temp2==1),1),zscores_overall(find(temp2==1),2),CRs_PCA(find(temp2==1)),'color',face_color(i,:))
-% end
 %% Find CRs of interest with split profiles/MIs
 %load in MI
 Save_condition=input('Save figure? 0=no, 1=yes');
 [num,text2]=xlsread('Excel Files/CRAnalysis','MI');
 CR_compiled=text2(2:end,1);
-MI_compiled=num(1:end,1);
+MI_compiled=num(2:end,1);
 VP16_MI=nanmean(MI_compiled(strcmp(CR_compiled,'VP16 (JY30)')));
 MI_compiled=MI_compiled./VP16_MI;
 files_compiled=text2(2:end,4);
@@ -1211,6 +1046,7 @@ for i=1:number_of_clusters
  err=[err,nanstd(MI_compiled(cdis_reordered==i))./sqrt(length(MI_compiled(cdis_reordered==i)))];
 values=[values,nanmean(MI_compiled(cdis_reordered==i))];
 bar(i,values(i),'FaceColor',face_color(i,:));
+plot(i.*ones(length(MI_compiled(cdis_reordered==i)),1),MI_compiled(cdis_reordered==i),'.','color',[0.5,.5,.5],'Markersize',10);
 end
 errorbar(1:number_of_clusters,values,err,'linestyle','none','color','k','linewidth',2,'capsize',0);
     set(gca,'XTick',1:number_of_clusters)
@@ -1248,7 +1084,7 @@ errorbar(1:number_of_clusters,values,err,'linestyle','none','color','k','linewid
   %set(gca,'Yscale','log')
 hold off
 if Save_condition==1
-%saveas(gcf,'LogPlots/MIvsCVCluster.png')
+%saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/MIvsCVCluster.png')
 end
 figure
 [p_value_CV_MI,~,stats]=anovan(MI_compiled,{cdis_reordered},'varnames',{'Cluster'});
@@ -1328,8 +1164,7 @@ Function_matrix(:,sum(Function_matrix)==0)=[];
 
 
 %perform fisher exact test for enrichment of Complex  activity of each complex within each cluster
-%Matrix is p-values with rows being the cluster and columns the General
-%activity
+%Matrix is p-values with rows being the cluster and columns the complex
 p_GO_cluster=NaN(number_of_clusters,length(unique_complex));
 p_GO_cluster_corrected=NaN(number_of_clusters,length(unique_complex));
 enrichment=NaN(number_of_clusters,length(unique_complex));
@@ -1365,7 +1200,7 @@ p_GO_cluster(p_GO_cluster==0)=10^-4;
     ylim([0,4])
  end
   if Save_condition==1
-     %saveas(gcf,'LogPlots/FC_GO_pvalues.png')
+     saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/FC_GO_pvalues.png')
  end
  figure
  set(gcf,'position',[440,225,560,570]);
@@ -1387,10 +1222,10 @@ p_GO_cluster(p_GO_cluster==0)=10^-4;
     scatter(x,values(sigtemp)+max(14)./25,'*k')
  end
  if Save_condition==1
-     %saveas(gcf,'LogPlots/FC_GO_enrichment.png')
+     saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/FC_GO_enrichment.png')
  end
  
-%perform fisher exact test for enrichment of Complex GO within each cluster
+%perform fisher exact test for enrichment of general activity within each cluster
 %Matrix is p-values with rows being the cluster and columns the GO
 p_GA_cluster=NaN(number_of_clusters,length(unique_activity));
 p_GA_cluster_corrected=NaN(number_of_clusters,length(unique_activity));
@@ -1425,7 +1260,7 @@ end
     ylim([0,3])
  end
   if Save_condition==1
-     %saveas(gcf,'LogPlots/FC_GA_pvalues.png')
+     saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/FC_GA_pvalues.png')
  end
  sig=p_GA_cluster_corrected<=0.05;
  figure
@@ -1448,7 +1283,7 @@ end
     scatter(x,values(sigtemp)+max(14)./25,'*k')
  end
  if Save_condition==1
-     %saveas(gcf,'LogPlots/FC_GA_enrichment.png')
+     saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/FC_GA_enrichment.png')
  end
  
  %perform fisher exact test for enrichment of Process within each cluster
@@ -1486,7 +1321,7 @@ end
     ylim([0,3])
  end
   if Save_condition==1
-     %saveas(gcf,'LogPlots/FC_Process_pvalues.png')
+     saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/FC_Process_pvalues.png')
  end
  sig=p_Process_cluster_corrected<=0.05;
  figure
@@ -1509,7 +1344,7 @@ end
     scatter(x,values(sigtemp)+max(14)./25,'*k')
  end
  if Save_condition==1
-     %saveas(gcf,'LogPlots/FC_Process_enrichment.png')
+     saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/FC_Process_enrichment.png')
  end
  
  %perform fisher exact test for enrichment of Process within each cluster
@@ -1549,7 +1384,7 @@ end
     ylim([0,3])
  end
  if Save_condition==1
-     %saveas(gcf,'LogPlots/FC_Function_pvalues.png')
+     saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/FC_Function_pvalues.png')
  end
  sig=p_Function_cluster_corrected<=0.05;
  figure
@@ -1572,7 +1407,7 @@ end
     scatter(x,values(sigtemp)+max(14)./25,'*k')
  end
  if Save_condition==1
-     %saveas(gcf,'LogPlots/FC_Function_enrichment.png')
+     saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/FC_Function_enrichment.png')
  end
  %% For CV profiles: Fisher exact test for Complex and complex general activity
 Save_condition=input('Save figure? 0=no, 1=yes');
@@ -1612,7 +1447,7 @@ end
  end
  suptitle('Based on CV')
   if Save_condition==1
-     %saveas(gcf,'LogPlots/CV_GO_pvalues.png')
+     %saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/CV_GO_pvalues.png')
   end
   sig=p_CV_GO_cluster_corrected<=0.05;
  figure
@@ -1635,7 +1470,7 @@ end
     scatter(x,values(sigtemp)+max(14)./25,'*k')
  end
  if Save_condition==1
-     %saveas(gcf,'LogPlots/CV_GO_enrichment.png')
+     %saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/CV_GO_enrichment.png')
  end
 %perform fisher exact test for enrichment of Complex GO within each cluster
 %Matrix is p-values with rows being the cluster and columns the GO
@@ -1672,7 +1507,7 @@ end
     ylim([0,3])
  end
   if Save_condition==1
-     %saveas(gcf,'LogPlots/CV_GA_pvalues.png')
+     %saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/CV_GA_pvalues.png')
   end
     sig=p_CV_GA_cluster_corrected<=0.05;
  figure
@@ -1695,7 +1530,7 @@ end
     scatter(x,values(sigtemp)+max(14)./25,'*k')
  end
  if Save_condition==1
-     %saveas(gcf,'LogPlots/CV_GA_enrichment.png')
+     %saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/CV_GA_enrichment.png')
  end
   %perform fisher exact test for enrichment of Process within each cluster
 %Matrix is p-values with rows being the cluster and columns the Process
@@ -1734,7 +1569,7 @@ end
     ylim([0,3])
  end
  if Save_condition==1
-     %saveas(gcf,'LogPlots/CV_Process_pvalues.png')
+     %saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/CV_Process_pvalues.png')
  end
      sig=p_CV_Process_cluster_corrected<=0.05;
  figure
@@ -1757,7 +1592,7 @@ end
     scatter(x,values(sigtemp)+max(14)./25,'*k')
  end
  if Save_condition==1
-     %saveas(gcf,'LogPlots/CV_Process_enrichment.png')
+     %saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/CV_Process_enrichment.png')
  end
   %perform fisher exact test for enrichment of Function within each cluster
 %Matrix is p-values with rows being the cluster and columns the function
@@ -1796,7 +1631,7 @@ end
     ylim([0,3])
  end
  if Save_condition==1
-     %saveas(gcf,'LogPlots/CV_Function_pvalues.png')
+     %saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/CV_Function_pvalues.png')
  end
       sig=p_CV_Function_cluster_corrected<=0.05;
  figure
@@ -1819,7 +1654,7 @@ end
     scatter(x,values(sigtemp)+max(14)./25,'*k')
  end
  if Save_condition==1
-     %saveas(gcf,'LogPlots/CV_Function_enrichment.png')
+     %saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/CV_Function_enrichment.png')
  end
  %% %Fisher exact test to determine link between FC clusters and MI
  MI_high_limit=1.15;
@@ -1831,7 +1666,7 @@ p_MI_cluster_corrected=EnrichmentPlot(cdis_reordered_noVP16,MI_increased,'Cluste
     xlabel('FC cluster')
     title('High MI')
  if Save_condition==1
-     %saveas(gcf,'LogPlots/FC_MI_increased_pvalues.png')
+     %saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/FC_MI_increased_pvalues.png')
  end
 %for MI<.5
  p_MI_cluster_decrease=NaN(number_of_clusters,1);
@@ -1841,7 +1676,7 @@ ylabel('Fold enrichment')
 xlabel('FC cluster')
 title('Low MI')
  if Save_condition==1
-     %saveas(gcf,'LogPlots/FC_MI_decrease_pvalues.png')
+     %saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/FC_MI_decrease_pvalues.png')
  end
  
  p_MI_cluster_decrease2_corrected=EnrichmentPlot(cdis_reordered_noVP16,~MI_decreased,'Cluster');
@@ -1849,7 +1684,7 @@ ylabel('Fold diminishment')
 xlabel('FC cluster')
 title('Low MI')
  if Save_condition==1
-     %saveas(gcf,'LogPlots/FC_MI_decrease_diminishment.png')
+     %saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/FC_MI_decrease_diminishment.png')
  end
  %Fisher exact test to determine link between CV clusters and MI
 p_MI_CV_cluster_corrected=EnrichmentPlot(cdis_CV_reordered_noVP16,MI_increased,'ClusterCV');
@@ -1858,7 +1693,7 @@ xlabel('CV cluster')
 title('High MI')
 
  if Save_condition==1
-     %saveas(gcf,'LogPlots/CV_MI_pvalues.png')
+     %saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/CV_MI_pvalues.png')
  end
  
  p_MI_CV_cluster2_corrected=EnrichmentPlot(cdis_CV_reordered_noVP16,~MI_increased,'ClusterCV');
@@ -1867,7 +1702,7 @@ xlabel('CV cluster')
 title('High MI')
 
  if Save_condition==1
-     %saveas(gcf,'LogPlots/CV_MI_diminishment.png')
+     %saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/CV_MI_diminishment.png')
  end
  %Decrease MI
  p_MI_decrease_CV_cluster_corrected=EnrichmentPlot(cdis_CV_reordered_noVP16,MI_decreased,'ClusterCV');
@@ -1877,7 +1712,7 @@ title('Low MI')
  p_MI_decrease_CV_cluster=NaN(number_of_clusters,1);
 
  if Save_condition==1
-     %saveas(gcf,'LogPlots/CV_MI_decreased_pvalues.png')
+     %saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/CV_MI_decreased_pvalues.png')
  end
  p_MI_decrease_CV_cluster2_corrected=EnrichmentPlot(cdis_CV_reordered_noVP16,~MI_decreased,'ClusterCV');
 ylabel('Fold diminishment')
@@ -1886,14 +1721,14 @@ title('Low MI')
  p_MI_decrease_CV_cluster=NaN(number_of_clusters,1);
 
  if Save_condition==1
-     %saveas(gcf,'LogPlots/CV_MI_decreased_diminishment.png')
+     %saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/CV_MI_decreased_diminishment.png')
  end
  %% Graph of MI average for each CR
  [num,text2]=xlsread('Excel Files/CRAnalysis.xlsx','MI');
  CR=text2(2:end,1);
  %CR=CR_compiled;
  
- MI=num(1:end,1);
+ MI=num(2:end,1);
  MI_VP16=nanmean(MI(strcmp(CR,'VP16 (JY145)')));
  MI(strcmp(CR,'VP16 (JY30)'))=[];
  CR(strcmp(CR,'VP16 (JY30)'))=[];
@@ -1905,7 +1740,7 @@ title('Low MI')
  [~,~,stats]=anova1(t.MI,t.Gene);
  multcompare(stats)
  
- Stats_MI=grpstats(t,{'Gene'},{'mean','std','meanci','sem','std'});
+ Stats_MI=grpstats(t,{'Gene'},{'mean','std','meanci','sem'});
  Stats_MI=Stats_MI(Stats_MI.GroupCount>=3,:);
  Stats_MI = sortrows(Stats_MI,'mean_MI','ascend');
  figure
@@ -1925,7 +1760,7 @@ title('Low MI')
     set(gca,'XTickLabelRotation',90)
     ylim([0,1.8])
     ylabel('MI_F_M')
-    saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/MI_bar_points_sem_all.png')
+    %saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/MI_bar_points_sem_all.png')
     
  %% Determining link between GO/GA and MI
  %remove VP16
@@ -1944,6 +1779,7 @@ title('Low MI')
  [values,I]=sort(Average_MI_GO,'descend');
  err=err(I);
  labels=[];
+ MI_GO=MI_GO(:,I);
  labels=unique_complex(I);
  labels(isnan(values))=[];
  err(isnan(values))=[];
@@ -1952,11 +1788,14 @@ title('Low MI')
       bar(length(values(values>=1.13))+1:length(values(values>=.5)),values(values<=1.13 & values>=.5),'FaceColor',[.9,.9,.9]);
       bar(length(values(values>=.5))+1:length(values),values(values<.5),'FaceColor',[.5,.5,.5]);
      errorbar(1:length(values),values,err,'linestyle','none','color','k','linewidth',2,'capsize',0);
+     plot(MI_GO','.','color',[0.3,.3,.3],'Markersize',5)
      set(gca,'XTick',1:length(values))
     set(gca,'XTickLabel',labels)
     set(gca,'XTickLabelRotation',45)
     set(gca,'fontsize',8)
     ylim([0,1.5])
+    ylabel('Average MI for each GO')
+    xlabel('GO by complex')
     saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/averageMI_GO.png')
  figure
 [p_value_GO_MI_anova,~,stats]=anova1(MI_GO)
@@ -1986,8 +1825,9 @@ end
     set(gca,'XTickLabel',labels(1:10))
     set(gca,'XTickLabelRotation',45)
     ylim([0,2])
+    ylabel('p_adjusted') 
  if Save_condition==1
-     %saveas(gcf,'LogPlots/MI_GO_pvalues.png')
+     %saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/MI_GO_pvalues.png')
  end
   sig=p_MI_GO_corrected<=0.05;
  figure
@@ -2005,12 +1845,13 @@ end
     set(gca,'XTickLabel',labels(1:10))
     set(gca,'XTickLabelRotation',45)
     set(gca,'fontsize',8)
-    
+    ylabel('Enrichement')
+    xlabel('Complex')
     ylim([0,7])
     scatter(x,values(sigtemp)+max(14)./25,'*k')
  
  if Save_condition==1
-     %saveas(gcf,'LogPlots/MI_GO_enrichment.png')
+     %saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/MI_GO_enrichment.png')
  end
  
   %Fisher Exact test between GO and MI below 0.5
@@ -2039,7 +1880,7 @@ end
     set(gca,'XTickLabelRotation',45)
     ylim([0,3])
  if Save_condition==1
-     %saveas(gcf,'LogPlots/MI_decrease_GO_pvalues.png')
+     %saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/MI_decrease_GO_pvalues.png')
  end
  
   sig=p_MI_decrease_GO_corrected<=0.05;
@@ -2063,7 +1904,7 @@ end
     scatter(x,values(sigtemp)+max(5)./25,'*k')
  
  if Save_condition==1
-     %saveas(gcf,'LogPlots/MI_decrease_GO_enrichment.png')
+     %saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/MI_decrease_GO_enrichment.png')
  end
   %Average MI for each GA
  Average_MI_GA=zeros(length(Activity_matrix(1,:)),1);
@@ -2085,7 +1926,7 @@ end
     set(gca,'XTickLabelRotation',45)
     set(gca,'fontsize',8)
     ylim([0,1.5])
-    %saveas(gcf,'LogPlots/AverageMI_GA.png')
+    %saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/AverageMI_GA.png')
  figure
 [p_value_GA_MI_anova,~,stats]=anova1(MI_GA)
 multcompare_CV_MI=multcompare(stats)
@@ -2118,7 +1959,7 @@ end
     set(gca,'fontsize',8)
     ylim([0,1.5])
  if Save_condition==1
-     %saveas(gcf,'LogPlots/MI_GA_pvalues.png')
+     %saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/MI_GA_pvalues.png')
  end
  
    sig=p_MI_GA_corrected<=0.05;
@@ -2142,7 +1983,7 @@ end
     scatter(x,values(sigtemp)+max(5)./25,'*k')
  
  if Save_condition==1
-     %saveas(gcf,'LogPlots/MI_GA_enrichment.png')
+     %saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/MI_GA_enrichment.png')
  end
  
   %Fisher Exact test between GA and MI below 0.5
@@ -2173,7 +2014,7 @@ end
     set(gca,'fontsize',8)
     ylim([0,1.5])
  if Save_condition==1
-     %saveas(gcf,'LogPlots/MI_decrease_GA_pvalues.png')
+     %saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/MI_decrease_GA_pvalues.png')
  end
  
    sig=p_MI_decrease_GA_corrected<=0.05;
@@ -2197,7 +2038,7 @@ end
     scatter(x,values(sigtemp)+max(5)./25,'*k')
  
  if Save_condition==1
-     %saveas(gcf,'LogPlots/MI_decrease_GA_enrichment.png')
+     %saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/MI_decrease_GA_enrichment.png')
  end
  %% Connection between MI and process
  Average_MI_Process=zeros(length(Process_matrix(1,:)),1);
@@ -2212,6 +2053,7 @@ end
  end
  [values,I]=sort(Average_MI_Process,'descend');
  err=err(I);
+ MI_Process=MI_Process(:,I);
  labels=[];
  labels=unique_Process(I);
   labels(isnan(values))=[];
@@ -2221,10 +2063,12 @@ end
       bar(length(values(values>=1.13))+1:length(values(values>=.5)),values(values<=1.13 & values>=.5),'FaceColor',[.9,.9,.9]);
       bar(length(values(values>=.5))+1:length(values),values(values<.5),'FaceColor',[1,.85,.9]);
      errorbar(1:length(values),values,err,'linestyle','none','color','k','linewidth',1.5,'capsize',0);
+     plot(MI_Process','.','color',[0.3,.3,.3],'Markersize',5)
      set(gca,'XTick',1:length(values))
     set(gca,'XTickLabel',labels)
     set(gca,'XTickLabelRotation',45)
     set(gca,'fontsize',8)
+    set(gcf,'position',[440,378,986,420])
     ylim([0,1.5])
     saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/averageMI_Process.png')
  figure
@@ -2257,7 +2101,7 @@ end
     set(gca,'XTickLabelRotation',45)
     ylim([0,2.5])
  if Save_condition==1
-     %saveas(gcf,'LogPlots/MI_Process_pvalues.png')
+     %saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/MI_Process_pvalues.png')
  end
     sig=p_MI_Process_corrected<=0.05;
  figure
@@ -2280,7 +2124,7 @@ end
     scatter(x,values(sigtemp)+max(5)./25,'*k')
  
  if Save_condition==1
-     %saveas(gcf,'LogPlots/MI_Process_enrichment.png')
+     %saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/MI_Process_enrichment.png')
  end
   %Fisher Exact test between GO and MI below 0.5
   p_MI_decrease_Process=NaN(length(Process_matrix(1,:)),1);
@@ -2311,7 +2155,7 @@ end
     set(gca,'XTickLabelRotation',45)
     ylim([0,2.5])
  if Save_condition==1
-     %saveas(gcf,'LogPlots/MI_decrease_Process_pvalues.png')
+     %saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/MI_decrease_Process_pvalues.png')
  end
   sig=p_MI_decrease_Process_corrected<=0.05;
  figure
@@ -2334,7 +2178,7 @@ end
     scatter(x,values(sigtemp)+max(5)./25,'*k')
  
  if Save_condition==1
-     %saveas(gcf,'LogPlots/MI_decrease_Process_enrichment.png')
+     %saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/MI_decrease_Process_enrichment.png')
  end
   sig=p_MI_decrease_Process2_corrected<=0.05;
  figure
@@ -2357,7 +2201,7 @@ end
     scatter(x,values(sigtemp)+max(5)./25,'*k')
  
  if Save_condition==1
-     %saveas(gcf,'LogPlots/MI_decrease_Process_diminishment.png')
+     %saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/MI_decrease_Process_diminishment.png')
  end
  %% Connection between MI and function
  Average_MI_Function=zeros(length(unique_Function),1);
@@ -2373,6 +2217,7 @@ end
  end
  [values,I]=sort(Average_MI_Function,'descend');
  err=err(I);
+ MI_Function=MI_Function(:,I);
  labels=[];
  labels=unique_Function(I);
   labels(isnan(values))=[];
@@ -2381,13 +2226,14 @@ end
       bar(1:length(values(values>=1)),values(values>=1),'FaceColor',[.9,.7,.7]);
       bar(length(values(values>=1))+1:length(values(values>=.5)),values(values<=1 & values>=.5),'FaceColor',[.9,.9,.9]);
       bar(length(values(values>=.5))+1:length(values),values(values<.5),'FaceColor',[.5,.5,.5]);
-     errorbar(1:length(values),values,err,'linestyle','none','color','k','linewidth',2,'capsize',0);
+     errorbar(1:length(values),values,err,'linestyle','none','color','k','linewidth',1.5,'capsize',0);
+     plot(MI_Function','.','color',[0.3,.3,.3],'Markersize',5)
      set(gca,'XTick',1:length(values))
     set(gca,'XTickLabel',labels)
     set(gca,'XTickLabelRotation',45)
     set(gca,'fontsize',8)
     ylim([0,1.5])
-    %saveas(gcf,'LogPlots/averageMI_Function.png')
+    saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/averageMI_Function.png')
  figure
 [p_value_Function_MI_anova,~,stats]=anova1(MI_Function)
 multcompare_Function_MI=multcompare(stats)
@@ -2422,7 +2268,7 @@ end
     set(gca,'XTickLabelRotation',45)
     ylim([0,2])
  if Save_condition==1
-     %saveas(gcf,'LogPlots/MI_Function_pvalues.png')
+     %saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/MI_Function_pvalues.png')
  end
  sig=p_MI_Function_corrected<=0.05;
  figure
@@ -2445,7 +2291,7 @@ end
     scatter(x,values(sigtemp)+max(5)./25,'*k')
  
  if Save_condition==1
-     %saveas(gcf,'LogPlots/MI_Function_enrichment.png')
+     %saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/MI_Function_enrichment.png')
  end
  sig=p_MI_Function2_corrected<=0.05;
  figure
@@ -2468,7 +2314,7 @@ end
     scatter(x,values(sigtemp)+max(5)./25,'*k')
  
  if Save_condition==1
-     %saveas(gcf,'LogPlots/MI_Function_diminishment.png')
+     %saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/MI_Function_diminishment.png')
  end
   %Fisher Exact test between Function and MI below 0.5
   p_MI_decrease_Function=NaN(length(Function_matrix(1,:)),1);
@@ -2499,7 +2345,7 @@ end
     set(gca,'XTickLabelRotation',45)
     ylim([0,2])
  if Save_condition==1
-     %saveas(gcf,'LogPlots/MI_decrease_Function_pvalues.png')
+     %saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/MI_decrease_Function_pvalues.png')
  end
  sig=p_MI_decrease_Function_corrected<=0.05;
  figure
@@ -2522,7 +2368,7 @@ end
     scatter(x,values(sigtemp)+max(5)./25,'*k')
  
  if Save_condition==1
-     %saveas(gcf,'LogPlots/MI_decrease_Function_enrichment.png')
+     %saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/MI_decrease_Function_enrichment.png')
  end
  sig=p_MI_decreased_Function2_corrected<=0.05;
  figure
@@ -2545,7 +2391,7 @@ end
     scatter(x,values(sigtemp)+max(5)./25,'*k')
  
  if Save_condition==1
-     %saveas(gcf,'LogPlots/MI_decrease_Function_diminishment.png')
+     %saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/MI_decrease_Function_diminishment.png')
  end
  %% Example CRs for each cluster
  indices=any(~isnan(fc3_reordered),2);
@@ -2609,12 +2455,12 @@ end
 
     end
 end
-genes={'cdc73','arp8','ecm5','taf9','hda3'};
+genes={'cdc73','VP16 (JY145)','arp8','taf9','hda3'};
 
-test=[fc3_comp(strcmp(CR_comp, 'cdc73'),:); fc3_comp(strcmp(CR_comp,'arp8')); fc3_comp(strcmp(CR_comp,'ecm5'));fc3_comp(strcmp(CR_comp,'taf9'));fc3_comp(strcmp(CR_comp,'hda3'))];
-testCR=[CR_comp(strcmp(CR_comp, 'cdc73'),:); CR_comp(strcmp(CR_comp,'arp8')); CR_comp(strcmp(CR_comp,'ecm5')); CR_comp(strcmp(CR_comp,'taf9'));CR_comp(strcmp(CR_comp,'hda3'))];
-testCond=[cond_comp(strcmp(CR_comp, 'cdc73'),:); cond_comp(strcmp(CR_comp,'arp8')); cond_comp(strcmp(CR_comp,'ecm5')); cond_comp(strcmp(CR_comp,'taf9'));cond_comp(strcmp(CR_comp,'hda3'))];
-[p,h,stats]=anova1(test(strcmp(testCR,'hda3')),testCond(strcmp(testCR,'hda3')));
+test=[fc3_comp(strcmp(CR_comp, 'cdc73'),:); fc3_comp(strcmp(CR_comp,'arp8')); fc3_comp(strcmp(CR_comp,'VP16 (JY145)'));fc3_comp(strcmp(CR_comp,'taf9'));fc3_comp(strcmp(CR_comp,'hda3'))];
+testCR=[CR_comp(strcmp(CR_comp, 'cdc73'),:); CR_comp(strcmp(CR_comp,'arp8')); CR_comp(strcmp(CR_comp,'VP16 (JY145)')); CR_comp(strcmp(CR_comp,'taf9'));CR_comp(strcmp(CR_comp,'hda3'))];
+testCond=[cond_comp(strcmp(CR_comp, 'cdc73'),:); cond_comp(strcmp(CR_comp,'arp8')); cond_comp(strcmp(CR_comp,'VP16 (JY145)')); cond_comp(strcmp(CR_comp,'taf9'));cond_comp(strcmp(CR_comp,'hda3'))];
+[p,h,stats]=anova1(test(strcmp(testCR,'VP16 (JY145)')),testCond(strcmp(testCR,'VP16 (JY145)')));
 results=multcompare(stats)
 figure
 set(gcf,'position',[440,225,560,570]);
@@ -2640,14 +2486,31 @@ legend(genes(i),'location','southeast')
 end
 set(gca,'Xtick',1:5)
 set(gca,'linewidth',1,'ticklength',[0.005 0.005])
-saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/FC_exampleCR.png')
+%saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/FC_exampleCR.png')
 xlabel('Frequency (sec^-^1)')
 ylabel('log_1_0(Fold change)')
 
+figure
+indices=strcmp(table2.Gene,'VP16 (JY145)');
+bar(1:3,[table2.mean_FC1(indices) table2.mean_FC2(indices) table2.mean_FC3(indices)],'facecolor',face_color(table2.Cluster('VP16 (JY145)'),:))
+hold on   
+errorbar(1:3,[table2.mean_FC1(indices) table2.mean_FC2(indices) table2.mean_FC3(indices),],...
+    [table2.sem_FC1(indices) table2.sem_FC2(indices) table2.sem_FC3(indices)],'Linewidth',2,'Color','k','Linestyle','none','Capsize',0)
+values=fc3_overall_notmasked(strcmp(CR_80_not_masked,'VP16 (JY145)'),:);
+% xvalues=(3*(i-1)+1:3*i);
+
+%errorbar(Freq_1,[table2.mean_FC1(indices) table2.mean_FC2(indices) table2.mean_FC3(indices)],...
+    %[table2.meanci_FC1(indices,2)-table2.mean_FC1(indices) table2.meanci_FC2(indices,2)-table2.mean_FC2(indices) table2.meanci_FC3(indices,2)-table2.mean_FC3(indices)],'Linewidth',2,'Color',face_color(table2.Cluster(genes(i)),:))
+plot(1:3,values','.','color',[0.5,.5,.5],'Markersize',10)
+legend('VP16 only','location','north')
+%ylim(limits(i,:));
+set(gca,'Xtick',1:3)
+set(gca,'XTickLabel',{''})
+set(gca,'linewidth',1.25,'ticklength',[0.02 0.02])
 
 
 figure
-limits=[0,3;0,3;0,5;-1.5,3;-1,1];
+limits=[0,3;0,3;0,3;-1.5,3;-1,1];
 set(gcf,'position',[440,225,560,570]);
 for i=1:5
 indices=strcmp(table2.Gene,genes(i));
@@ -2656,7 +2519,7 @@ hold on
 bar(1:3,[table2.mean_FC1(indices) table2.mean_FC2(indices) table2.mean_FC3(indices)],'facecolor',face_color(table2.Cluster(genes(i)),:))
     errorbar(1:3,[table2.mean_FC1(indices) table2.mean_FC2(indices) table2.mean_FC3(indices),],...
     [table2.sem_FC1(indices) table2.sem_FC2(indices) table2.sem_FC3(indices)],'Linewidth',2,'Color','k','Linestyle','none','Capsize',0)
-values=fc3_overall(strcmp(CR_80,genes(i)),:);
+values=fc3_overall_notmasked(strcmp(CR_80_not_masked,genes(i)),:);
 % xvalues=(3*(i-1)+1:3*i);
 
 %errorbar(Freq_1,[table2.mean_FC1(indices) table2.mean_FC2(indices) table2.mean_FC3(indices)],...
@@ -2671,7 +2534,7 @@ end
 
 %     set(gca,'fontsize',8)
 
-    saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/FC_CRexample_bar.png')
+    %saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/FC_CRexample_bar.png')
 
 figure
 hold on
@@ -2690,10 +2553,10 @@ set(gca,'XTickLabel',{''})
 set(gca,'Xtick',1:number_of_clusters)
 ylabel('MI_F_M')
 set(gca,'linewidth',1.5,'ticklength',[0.02 0.02])
-    saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/FC_CRexample_MI.png')
+   % %saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/FC_CRexample_MI.png')
 
 figure
-[p,tbl,stats]=anova1(test);
+[p,tbl,stats]=anova1(test);% test for MI
 multcompare(stats)
 %CV for examples
 figure
@@ -2720,15 +2583,15 @@ end
 
 %     set(gca,'fontsize',8)
 
-    saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/FC_CRexample_CVbar.png')
+    %saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/FC_CRexample_CVbar.png')
 
-test=[CV_comp(strcmp(CR_comp, 'cdc73'),:); CV_comp(strcmp(CR_comp,'arp8')); CV_comp(strcmp(CR_comp,'ecm5'));CV_comp(strcmp(CR_comp,'taf9'));CV_comp(strcmp(CR_comp,'hda3'))];
-testCR=[CR_comp(strcmp(CR_comp, 'cdc73'),:); CR_comp(strcmp(CR_comp,'arp8')); CR_comp(strcmp(CR_comp,'ecm5')); CR_comp(strcmp(CR_comp,'taf9'));CR_comp(strcmp(CR_comp,'hda3'))];
-testCond=[cond_comp(strcmp(CR_comp, 'cdc73'),:); cond_comp(strcmp(CR_comp,'arp8')); cond_comp(strcmp(CR_comp,'ecm5')); cond_comp(strcmp(CR_comp,'taf9'));cond_comp(strcmp(CR_comp,'hda3'))];
+test=[CV_comp(strcmp(CR_comp, 'cdc73'),:); CV_comp(strcmp(CR_comp,'arp8')); CV_comp(strcmp(CR_comp,'VP16 (JY145)'));CV_comp(strcmp(CR_comp,'taf9'));CV_comp(strcmp(CR_comp,'hda3'))];
+testCR=[CR_comp(strcmp(CR_comp, 'cdc73'),:); CR_comp(strcmp(CR_comp,'arp8')); CR_comp(strcmp(CR_comp,'VP16 (JY145)')); CR_comp(strcmp(CR_comp,'taf9'));CR_comp(strcmp(CR_comp,'hda3'))];
+testCond=[cond_comp(strcmp(CR_comp, 'cdc73'),:); cond_comp(strcmp(CR_comp,'arp8')); cond_comp(strcmp(CR_comp,'VP16 (JY145)')); cond_comp(strcmp(CR_comp,'taf9'));cond_comp(strcmp(CR_comp,'hda3'))];
 [p,h,stats]=anovan(test,{testCR,testCond},'varnames',{'CR','Cond'},'model','interaction');
 results=multcompare(stats,'Dimension',[1 2])
 %% Histograms for example CRs for FC clusters
-genes={'cdc73','arp8','ecm5','taf9','hda3'};
+genes={'cdc73','arp8','VP16 (JY145)','taf9','hda3'};
 [~,d]=xlsread('Excel Files/CRMIsamples.xlsx');
 CR_MIsamples=d(3:end,1);
 Cond0_folder=d(3:end,3);
@@ -2740,10 +2603,10 @@ Cond2_file=d(3:end,8);
 Cond3_folder=d(3:end,9);
 Cond3_file=d(3:end,10);
 %
-replicate=[2,3,2,3,3];
+replicate=[2,3,13,3,3];
 figure
 set(gcf,'position',[440,225,560,570]);
-for l=1:5
+for l=3
     subplot(3,2,table2.Cluster(genes(l)))
     hold on
     xlim([0.01,3000])
@@ -2772,7 +2635,7 @@ med_k=median(k);
 Gate=(log_FSC-med_FSC).^2+(k-med_k).^2<=radius^2;
 Gate2=(log_FSC_H)./log_FSC>median(log_FSC_H./log_FSC)-.1 & (log_FSC_H)./log_FSC<median(log_FSC_H./log_FSC)+.1;
 Both_Gates=(Gate+Gate2==2);
-mCherry1=mCherry2(Both_Gates)./FSC_A(Both_Gates);%correct for size
+mCherry1=mCherry2(Both_Gates);%./FSC_A(Both_Gates);%correct for size
 %mCherry1=mCherry(Both_Gates);
 mCherry=[mCherry;mCherry1];
 end
@@ -2801,13 +2664,13 @@ med_k=median(k);
 Gate=(log_FSC-med_FSC).^2+(k-med_k).^2<=radius^2;
 Gate2=(log_FSC_H)./log_FSC>median(log_FSC_H./log_FSC)-.1 & (log_FSC_H)./log_FSC<median(log_FSC_H./log_FSC)+.1;
 Both_Gates=(Gate+Gate2==2);
-mCherry1=mCherry2(Both_Gates)./FSC_A(Both_Gates);%correct for size
+mCherry1=mCherry2(Both_Gates);%./FSC_A(Both_Gates);%correct for size
 %mCherry1=mCherry(Both_Gates);
 
 mCherry=[mCherry; mCherry1];
 end
 
-histogram(mCherry,edges,'normalization','probability','facecolor',face_color(2,:),'facealpha',1)
+histogram(mCherry1,edges,'normalization','probability','facecolor',face_color(2,:),'facealpha',1)
 
 mCherry=[];
 for j=replicate(l)
@@ -2830,11 +2693,11 @@ med_k=median(k);
 Gate=(log_FSC-med_FSC).^2+(k-med_k).^2<=radius^2;
 Gate2=(log_FSC_H)./log_FSC>median(log_FSC_H./log_FSC)-.1 & (log_FSC_H)./log_FSC<median(log_FSC_H./log_FSC)+.1;
 Both_Gates=(Gate+Gate2==2);
-mCherry1=mCherry2(Both_Gates)./FSC_A(Both_Gates);%correct for size
+mCherry1=mCherry2(Both_Gates);%./FSC_A(Both_Gates);%correct for size
 %mCherry1=mCherry(Both_Gates);
 mCherry=[mCherry1;mCherry];
 end
-histogram(mCherry,edges,'normalization','probability','facecolor',face_color(3,:),'facealpha',1)
+histogram(mCherry1,edges,'normalization','probability','facecolor',face_color(3,:),'facealpha',1)
 
 mCherry=[];
 for j=replicate(l)
@@ -2857,17 +2720,28 @@ med_k=median(k);
 Gate=(log_FSC-med_FSC).^2+(k-med_k).^2<=radius^2;
 Gate2=(log_FSC_H)./log_FSC>median(log_FSC_H./log_FSC)-.1 & (log_FSC_H)./log_FSC<median(log_FSC_H./log_FSC)+.1;
 Both_Gates=(Gate+Gate2==2);
-mCherry1=mCherry2(Both_Gates)./FSC_A(Both_Gates);%correct for size
+mCherry1=mCherry2(Both_Gates);%./FSC_A(Both_Gates);%correct for size
 %mCherry1=mCherry(Both_Gates);
 mCherry=[mCherry;mCherry1];
 end
-histogram(mCherry,edges,'normalization','probability','facecolor',face_color(4,:),'facealpha',1)
+histogram(mCherry1,edges,'normalization','probability','facecolor',face_color(4,:),'facealpha',1)
 
 xlim([0,1000])
 ylim([0,.3])
 set(gca,'XScale','log')
 end
-%saveas(gcf,'LogPlots/histograms_CRexamples.png')
+%saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/histograms_CRexamples.png')
+% 
+%% CV vs FC
+figure
+scatter(fc3_reordered(:,1),CV_reordered(:,1),100,'.');
+hold on
+scatter(fc3_reordered(:,2),CV_reordered(:,2),100,'.')
+scatter(fc3_reordered(:,3),CV_reordered(:,3),100,'.')
+legend({'Cond 1','Cond 2','Cond 3'})
+ylabel('CV')
+xlabel('FC')
+%saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/CVvsFC.png')
 %%  %% Example CRs for each CV cluster
 indices=~any(isnan(CV_reordered),2);
  CV_filtered=CV_reordered(indices,:);
@@ -2961,8 +2835,27 @@ set(gca,'XTickLabel',{''})
 end
 
 if Save_condition==1
-    %saveas(gcf,'LogPlots/CV_CRexample_bar.png')
+    %saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/CV_CRexample_bar.png')
 end
+figure
+subplot(3,2,4)
+indices=strcmp(table2.Gene,'VP16 (JY145)');
+bar(1:3,[table2.mean_CV1(indices) table2.mean_CV2(indices) table2.mean_CV3(indices)],'facecolor',face_color(4,:))
+hold on   
+errorbar(1:3,[table2.mean_CV1(indices) table2.mean_CV2(indices) table2.mean_CV3(indices),],...
+    [table2.sem_CV1(indices) table2.sem_CV2(indices) table2.sem_CV3(indices)],'Linewidth',2,'Color','k','Linestyle','none','Capsize',0)
+values=CV_overall_notmasked(strcmp(CR_80_not_masked,'VP16 (JY145)'),:);
+% xvalues=(3*(i-1)+1:3*i);
+
+%errorbar(Freq_1,[table2.mean_FC1(indices) table2.mean_FC2(indices) table2.mean_FC3(indices)],...
+    %[table2.meanci_FC1(indices,2)-table2.mean_FC1(indices) table2.meanci_FC2(indices,2)-table2.mean_FC2(indices) table2.meanci_FC3(indices,2)-table2.mean_FC3(indices)],'Linewidth',2,'Color',face_color(table2.Cluster(genes(i)),:))
+plot(1:3,values','.','color',[0.5,.5,.5],'Markersize',10)
+legend('VP16 only','location','north')
+%ylim(limits(i,:));
+set(gca,'Xtick',1:3)
+set(gca,'XTickLabel',{''})
+set(gca,'linewidth',1.25,'ticklength',[0.02 0.02])
+
 %Average MI for each example
 figure
 hold on
@@ -2976,7 +2869,7 @@ end
 ylabel('MI_F_M')
 set(gca,'XTickLabel',{''})
 if Save_condition==1
-    %saveas(gcf,'LogPlots/CV_CRexample_MI.png')
+    %saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/CV_CRexample_MI.png')
 end
 %% %% Histograms for example CRs for CV clusters
 genes={'bur2','cdc73','swc5','hir3','taf1'};
@@ -3118,7 +3011,7 @@ xlim([0,1000])
 ylim([0,.3])
 set(gca,'XScale','log')
 end
-%saveas(gcf,'LogPlots/CV_histograms_CRexamples.png')
+%saveas(gcf,'/Volumes/GoogleDrive/My Drive/Shared folder/YeastLightExperiments/CR screen/LogPlots/CV_histograms_CRexamples.png')
 
 %% 
 
