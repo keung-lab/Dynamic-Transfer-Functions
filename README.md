@@ -36,4 +36,5 @@ Matlab codes: Contains Matlab executable files
   
   Flow cytometry data: Contains raw data for all the experiments. See spreadsheets for what conditions go with each file.
   
-  Model Fitting: 
+  Model Fitting: All data and executables for fitting the models and creating Figures 3 and S3.
+  See readme in folder.
