@@ -4,7 +4,7 @@ This repository contains data files and Matlab codes used to analyze data from m
 Note: this package was written with Matlab R2018b. 
 It is written in Matlab and Python language. It requires "fwer_holmbonf.m" from Multiple Testing Toolbox (https://www.mathworks.com/matlabcentral/fileexchange/70604-multiple-testing-toolbox). 
 
-Package contains three folders described below:
+Package contains four folders described below:
 
 Matlab codes: Contains Matlab executable files
   BlahutArimoto.m- Algorithm to calculate the maximal mutual information from descretized data outputs. Modified from https://gist.github.com/Piyush3dB/01df75af9889414de1b6.
