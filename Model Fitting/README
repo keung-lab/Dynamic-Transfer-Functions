@@ -1,0 +1,17 @@
+This folder contains data files, Matlab, and Python codes to perform and analyzing the kinetic modeling from manuscript entitled "Mapping the dynamic transfer functions of epigenome editing". Note: Matlab code is written in MatlabR202b, Python code is written in Jupyter Notebook (anaconda3) 6.1.4 and run on HPC using Python 3.7.7. Any Matlab toolboxes or Python packages used in the code are available publicly online. 
+
+This package contains four folders and four separate scripts, described below:
+
+4 main Jupyter Notebook scripts that were used for fitting the 3 state model shown in Figure 3:
+Kfold 3 state endpoints.ipynb contains the code to set up stratified kfold cross validation and calculate endpoints and R2 for i input conditions and j parameter sets.
+LHS.ipynb contains the code for Latin Hypercube Sampling and generation of parameter sets. 
+Paralell 3 state fit.py contains parallelized code to calculate endpoint data and R2 for i input patterns and j parameter sets. All fitting codes in "3 state fit" and "Kfold" folders are derivative of this code.
+Time course plots.ipynb contains the code used to plot time course data and find time course data for each step of the model for heatmaps in Fig 3D.
+
+Model input data (Fig 3 and S3): contains all input data called in any code. 
+
+3 state fit (Fig 3): contains all of the code and raw input and output data from each fitting of the 3 state model in figure 3. Each subfolder contains the code for the run (3state.py), the parameter sets used in the run (params3.csv) and the data and R2 produced from the run (3model_out.csv and 3model_R2.csv, respectively).  
+
+Kfold (Fig S3A): contains all of the code and raw input and output data from each fold of cross validation for each model. There is a subfolder for each model, which has a subfolder for each fold. The subfolder for each fold of each model contains the code for the run (Xstate.py), the parameter sets used in the run (paramsX.csv), and the data and R2 produced from the run (Xmodel_out_foldY.csv, and Xmodel_R2_foldY.csv, respectively)  
+
+Figures (Fig 3 and S3): Fig 3B was made using FigurePlotModel4log.m. Fig 3C was made using PaperFigurePlot.m. Panel 3D was made using fig4v6heatmap.m. Panel 3E was made using promoterconc2unfilled.m. Any spreadsheets called in these scripts are also available in the folder. 
